@@ -15,22 +15,22 @@ class RestEndpoint:
 
     def set_headers(self, headers=None):
 
-        self.headers = headers
+        if not headers:
+            self.headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+        else:
+            self.headers = headers
 
-    def post(self, uri=None, p_params=None, payload=None, basic_auth=True, token_auth=False):
+    def post(self, p_params=None, payload=None, basic_auth=True, token_auth=False):
 
         # Format the path
         target = self.url
 
-        if uri:
-            target = self.url + uri
-
         # Take key value pairs from dict and format them ex: /user/{userID} and append to the target
         if p_params:
             p_string = '/'
-            for key in p_params:
-                p_string = p_string + key + '/' + str(p_params[key]) + '/'
-            target = target + p_string[:-1]
+            for item in range(len(p_params)):
+                p_string = p_string + '/' + str(p_params[item])
+            target = target + p_string
 
         # return target
 
@@ -52,19 +52,16 @@ class RestEndpoint:
 
             return res
 
-    def get(self, uri=None, q_params=None, p_params=None, basic_auth=True, token_auth=False):
+    def get(self, q_params=None, p_params=None, basic_auth=True, token_auth=False):
 
         # Format the path
         target = self.url
 
-        if uri:
-            target = target + uri
-
-        # Take key value pairs from dict and format them ex: /user/{userID} and append to the target
+        # Take key value pairs from list and format them ex: /user/{userID} and append to the target
         if p_params:
             p_string = '/'
-            for key in p_params:
-                p_string = p_string + key + '/' + str(p_params[key]) + '/'
+            for item in range(len(p_params)):
+                p_string = p_string + str(p_params[item]) + '/'
             target = target + p_string[:-1]
 
         # Take key value pairs from dict and format them ex: ?user={userID} and append to the target
