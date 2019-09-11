@@ -1,18 +1,24 @@
 from rest_classes.RestEndpoint import RestEndpoint
-import json
 
 endpoint = RestEndpoint(url='https://jsonplaceholder.typicode.com')
+endpoint.set_headers(headers={'Content-type': 'application/json', 'Accept': 'application/json'})
 
-headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+payload1 = ['foo', {'bar': ('baz', None, 1.0, 2)}]
+payload2 = [{'foo': 'bar'}]
 
-endpoint.set_headers(headers=headers)
+call1 = endpoint.post(uri='/posts', payload=payload1)
+print(call1['status_code'])
+print(call1['body'])
+print(call1['headers'])
+print('-----------------------')
 
-payload = ['foo', {'bar': ('baz', None, 1.0, 2)}]
+call2 = endpoint.post(uri='/posts', payload=payload2)
+print(call2['status_code'])
+print(call2['body'])
+print(call2['headers'])
+print('-----------------------')
 
-status = endpoint.post(uri='/posts', payload=payload)
-print(status['status_code'])
-print(status['body'])
-
-print(endpoint.url + '/posts')
-print(json.dumps(payload))
-print(payload)
+call3 = endpoint.get(uri='/posts')
+print(call3['status_code'])
+print(call3['body'])
+print(call3['headers'])
