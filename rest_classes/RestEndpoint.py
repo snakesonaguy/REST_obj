@@ -21,15 +21,20 @@ class RestEndpoint:
 
         # Format the path
         target = self.url
+
         if uri:
             target = self.url + uri
 
+        # Take key value pairs from dict and format them ex: /user/{userID} and append to the target
         if p_params:
             p_string = '/'
             for key in p_params:
                 p_string = p_string + key + '/' + str(p_params[key]) + '/'
             target = target + p_string[:-1]
 
+        # return target
+
+        # Perform the call using basic authorization
         if basic_auth:
             auth = (self.username, self.password)
             req = requests.post(target, auth=auth, headers=self.headers, data=json.dumps(payload))
@@ -55,18 +60,23 @@ class RestEndpoint:
         if uri:
             target = target + uri
 
+        # Take key value pairs from dict and format them ex: /user/{userID} and append to the target
         if p_params:
             p_string = '/'
             for key in p_params:
                 p_string = p_string + key + '/' + str(p_params[key]) + '/'
             target = target + p_string[:-1]
 
+        # Take key value pairs from dict and format them ex: ?user={userID} and append to the target
         if q_params:
             q_string = '?'
             for key in q_params:
                 q_string = q_string + key + '=' + str(q_params[key]) + '&'
             target = target + q_string[:-1]
 
+        # return target
+
+        # Perform the call using basic authorization
         if basic_auth:
             auth = (self.username, self.password)
             req = requests.get(target, auth=auth, headers=self.headers)

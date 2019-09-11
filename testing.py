@@ -18,7 +18,9 @@ print(call2['body'])
 print(call2['headers'])
 print('-----------------------')
 
-call3 = endpoint.get(uri='/posts')
+params = {"posts": 1}
+
+call3 = endpoint.get(p_params=params)
 print(call3['status_code'])
 print(call3['body'])
 print(call3['headers'])
