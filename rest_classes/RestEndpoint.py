@@ -25,12 +25,12 @@ class RestEndpoint:
         # Format the path
         target = self.url
 
-        # Take key value pairs from dict and format them ex: /user/{userID} and append to the target
+        # Take key value pairs from list and format them ex: /user/{userID} and append to the target
         if p_params:
             p_string = '/'
             for item in range(len(p_params)):
-                p_string = p_string + '/' + str(p_params[item])
-            target = target + p_string
+                p_string = p_string + str(p_params[item]) + '/'
+            target = target + p_string[:-1]
 
         # return target
 
